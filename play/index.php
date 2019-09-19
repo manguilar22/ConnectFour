@@ -3,10 +3,10 @@
 /*
  * Demo for Play
  */
-
-$pid = $_GET["pid"];
-$move = $_GET["move"];
-
+session_start();
+//$pid = $_GET["pid"];
+//$move = $_GET["move"];
+echo $_SESSION["Pid"];
 /*
  * {"response": true,
  "ack_move": {
@@ -21,7 +21,7 @@ $move = $_GET["move"];
    "row": []}}
  */
 
-
+/*
 if ($move >= 0 and 6 >= $move){
     $repsonse = array(
         "response" => true,
@@ -40,7 +40,6 @@ if ($move >= 0 and 6 >= $move){
     );
     echo json_encode($repsonse,JSON_PRETTY_PRINT);
 }
+*/
 
-
-
-?>
+echo "Works?";
