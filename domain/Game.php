@@ -19,7 +19,8 @@ class Game {
         return $this->pid;
     }
 
-    public function get_strategy(){
+    public function get_strategy()
+    {
         return $this->strategy;
     }
 
@@ -50,16 +51,21 @@ class Game {
     }
 
     /**
-     * Get game type, whether it is SMART or RANDOM
+     * @param $pid
+     * @param $strategy
      */
-    public function get_game(){
+    public function create_game($pid,$strategy)
+    {
+        $root = $_SERVER["DOCUMENT_ROOT"]."/domain/State/";
 
+        $content = json_encode(array("pid"=>$pid,"strategy"=>$strategy));
+
+        // Create JSON File
+        $fp = fopen($root.$pid.".json","w");
+        fwrite($fp,$content);
+        fclose($fp);
     }
 
-    public function create_game(){
-        $myFile = $this->pid.".json";
-
-    }
 
 }
 

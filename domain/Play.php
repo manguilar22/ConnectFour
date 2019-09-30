@@ -3,10 +3,16 @@
 class Play
 {
     private $pid;
+    private $board;
     private $move;
+    private $strategy;
+    private $content;
     private $row;
 
-
+    /**
+     * @param $move
+     * @return bool true | false
+     */
     public function isValid_move($move){
         $this->move = $move;
         if ($move > 0 and $move < 6){
@@ -17,7 +23,21 @@ class Play
     }
 
     /**
-     * @param $move
+     * @param $fileName, is the pid of the game
+     * @return mixed, data
+     */
+    public function get_game($fileName)
+    {
+        $root = $_SERVER["DOCUMENT_ROOT"]."/domain/State/".$fileName.".json";
+        $document = file_get_contents($root);
+        $data = json_decode($document,true);
+        $this->strategy = $data["strategy"];
+        return $data;
+    }
+
+    /**
+     * @param $move = players move
+     * @param $opponent = opponent's move
      * @return false|string
      */
     /*
@@ -25,7 +45,7 @@ class Play
      * "ack_move": {"slot":6,"isWin":false,"isDraw":false,"row":[]},
      * "move":{"slot":5,"isWin":false,"isDraw":false,"row":[]}}
      */
-    public function move_response($move){
+    public function move_response($move,$opponent){
         $response = array(
             "response"=>true,
             "ack_move"=>array(
@@ -35,7 +55,7 @@ class Play
                 "row"=>array(),
             ),
             "move"=>array(
-                "slot"=>$move,
+                "slot"=>$opponent,
                 "isWin"=>false,
                 "isDraw"=>false,
                 "row"=>array(),

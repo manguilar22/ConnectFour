@@ -10,7 +10,18 @@ $move = $_GET["move"];
 
 $play = new Play();
 
-$valid = $play->isValid_move($move);
+$play->isValid_move($move);
 
-echo $play->move_response($move);
+$data = $play->get_game($pid);
+
+/*
+ if ($play["strategy"] == "Random"){
+    GAME IS RANDOM
+    $play -> move_response($move,RANDOM_NUM);
+ } else {
+    GAME IS SMART
+    $play -> move_response($move,ALGORITHM);
+ }
+ */
+echo $play->move_response($move,0);
 

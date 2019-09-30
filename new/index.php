@@ -8,6 +8,11 @@ $game = new Game();
 $strategy = $_GET["strategy"];
 
 $game->is_valid_game($strategy);
+
 $game->set_strategy($strategy);
 
+$game->create_game(
+    $game->get_pid(),
+    $game->get_strategy()
+);
 
