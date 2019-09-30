@@ -14,14 +14,14 @@ $play->isValid_move($move);
 
 $data = $play->get_game($pid);
 
-/*
- if ($play["strategy"] == "Random"){
-    GAME IS RANDOM
-    $play -> move_response($move,RANDOM_NUM);
- } else {
-    GAME IS SMART
-    $play -> move_response($move,ALGORITHM);
- }
- */
-echo $play->move_response($move,0);
+switch ($data["strategy"]){
+    case "Random":
+        echo $play -> move_response($move,rand(0,7));
+        break;
+    case "Smart":
+        echo $play -> move_response($move,0);
+        break;
+}
+
+//echo $play->move_response($move,0);
 

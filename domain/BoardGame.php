@@ -13,5 +13,9 @@ class BoardGame
         $this->row = array();
     }
 
+    public function randomAI($move){
+
+    }
+
 
 }

@@ -29,7 +29,7 @@ class Play
     public function get_game($fileName)
     {
         $root = $_SERVER["DOCUMENT_ROOT"]."/domain/State/".$fileName.".json";
-        $document = file_get_contents($root);
+        $document = file_get_contents($root) or exit(json_encode(array("response"=>false,"pid"=>"Invalid PID")));
         $data = json_decode($document,true);
         $this->strategy = $data["strategy"];
         return $data;
