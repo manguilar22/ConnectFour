@@ -1,5 +1,5 @@
 <?php
-
+include "BoardGame.php";
 class Game {
 
     private $pid;
@@ -56,9 +56,13 @@ class Game {
      */
     public function create_game($pid,$strategy)
     {
+        $game = new BoardGame();
         $root = $_SERVER["DOCUMENT_ROOT"]."/domain/State/";
 
-        $content = json_encode(array("pid"=>$pid,"strategy"=>$strategy));
+        $content = json_encode(array(
+            "pid"=>$pid,
+            "strategy"=>$strategy,
+            "game"=>$game->getBoard()));
 
         // Create JSON File
         $fp = fopen($root.$pid.".json","w");

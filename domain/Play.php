@@ -1,13 +1,23 @@
 <?php
-
+include "BoardGame.php";
 class Play
 {
     private $pid;
+    private $strategy;
     private $board;
     private $move;
-    private $strategy;
     private $content;
     private $row;
+
+    public function boardGame()
+    {
+        return $this->board;
+    }
+
+    public function getBoard()
+    {
+        return $this->board->getBoard();
+    }
 
     /**
      * @param $move
@@ -22,6 +32,7 @@ class Play
         }
     }
 
+
     /**
      * @param $fileName, is the pid of the game
      * @return mixed, data
@@ -32,6 +43,7 @@ class Play
         $document = file_get_contents($root) or exit(json_encode(array("response"=>false,"pid"=>"Invalid PID")));
         $data = json_decode($document,true);
         $this->strategy = $data["strategy"];
+        $this->board = $data["game"];
         return $data;
     }
 
@@ -46,6 +58,8 @@ class Play
      * "move":{"slot":5,"isWin":false,"isDraw":false,"row":[]}}
      */
     public function move_response($move,$opponent){
+        $this->board->placeToken($move);
+        $this->board->placeTokenOpponent($opponent);
         $response = array(
             "response"=>true,
             "ack_move"=>array(
