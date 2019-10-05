@@ -41,16 +41,26 @@ class BoardGame
         return $this->placeholder;
     }
 
+    public function addPlaceholder($var){
+        $this->placeholder = array_push($this->placeholder,$var);
+        return $this->placeholder;
+    }
 
     public function getBoard(){
         return $this->board;
     }
 
+    public function setBoard($data){
+        $this->board = $data;
+    }
+
     public function checkPlace($move)
     {
-        $board = $this->getBoard();
+        $board = $this->board;
         $col = $this->getColumn();
-        if($board[$col][$move] == 1 or $board[$col][$move] == 2) {
+        $placeholder = $this->addPlaceholder($move);
+        $results = array_unique($placeholder);
+        if(($board[$col][$move] == 1 or $board[$col][$move] == 2) and in_array($move,$results)) {
             $col--;
         }
         return $col;
@@ -65,15 +75,12 @@ class BoardGame
          * [] [] [] []
          */
         $this->board[$move][$column] = 1;
-
     }
 
     public function placeTokenOpponent($move)
     {
         $column = $this->checkPlace($move);
-        if (isset($column)) {
-            $this->board[$move][$column]= 2;
-        }
+        $this->board[$move][$column]= 2;
     }
 
 

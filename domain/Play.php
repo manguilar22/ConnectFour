@@ -2,16 +2,30 @@
 include "BoardGame.php";
 class Play
 {
-    private $pid;
     private $strategy;
     private $board;
     private $move;
-    private $content;
-    private $row;
+    private $pid;
 
-    public function boardGame()
+    public function __construct()
     {
-        return $this->board;
+        $this->board = new BoardGame();
+
+    }
+
+    public function setPid($data)
+    {
+        $this->pid = $data["pid"];
+    }
+
+    public function getPid()
+    {
+        return $this->pid;
+    }
+
+
+    public function setBoard($data){
+        $this->board->setBoard($data["game"]);
     }
 
     public function getBoard()
@@ -19,19 +33,28 @@ class Play
         return $this->board->getBoard();
     }
 
+    public function getGame(){
+        return $this->board;
+    }
+
     /**
      * @param $move
+     * @param $pid
      * @return bool true | false
      */
-    public function isValid_move($move){
+    public function isValid_move($move,$pid)
+    {
         $this->move = $move;
         if ($move > 0 and $move < 6){
             return true; // Valid
-        } else {
-            return false; // Invalid
+        } else if ($pid != $this->pid) {
+            return json_encode(array(
+                "response" => false,
+                "reason" => "Unknown Pid"
+            ));
         }
+        return true;
     }
-
 
     /**
      * @param $fileName, is the pid of the game
@@ -39,11 +62,12 @@ class Play
      */
     public function get_game($fileName)
     {
-        $root = $_SERVER["DOCUMENT_ROOT"]."/domain/State/".$fileName.".json";
-        $document = file_get_contents($root) or exit(json_encode(array("response"=>false,"pid"=>"Invalid PID")));
+        //$root = $_SERVER["DOCUMENT_ROOT"]."/domain/State/".$fileName.".json";
+        // Remote Server
+        $root = "../writable/".$fileName.".json";
+        $document = file_get_contents($root); //or exit(json_encode(array("response"=>false,"pid"=>"PID not valid")));
         $data = json_decode($document,true);
         $this->strategy = $data["strategy"];
-        $this->board = $data["game"];
         return $data;
     }
 

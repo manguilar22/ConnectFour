@@ -57,8 +57,9 @@ class Game {
     public function create_game($pid,$strategy)
     {
         $game = new BoardGame();
-        $root = $_SERVER["DOCUMENT_ROOT"]."/domain/State/";
-
+        //$root = $_SERVER["DOCUMENT_ROOT"]."/domain/State/";
+        // Remote Server
+        $root = "../writable/";
         $content = json_encode(array(
             "pid"=>$pid,
             "strategy"=>$strategy,
