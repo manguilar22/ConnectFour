@@ -64,7 +64,6 @@ class Game {
             "pid"=>$pid,
             "strategy"=>$strategy,
             "game"=>$game->getBoard()));
-
         // Create JSON File
         $fp = fopen($root.$pid.".json","w");
         fwrite($fp,$content);
